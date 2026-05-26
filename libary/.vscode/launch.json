@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Debug Library App",
+      "request": "launch",
+      "mainClass": "library.com.App",
+      "console": "integratedTerminal",
+      "vmArgs": "-Dfile.encoding=UTF-8",
+      "env": {
+        "JAVA_TOOL_OPTIONS": "-Dfile.encoding=UTF-8"
+      }
+    }
+  ]
+}
