@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Library {
+
+public class Library implements Searchable  {
+
     private List<Book> books = new ArrayList<>();
     private List<Reader> readers = new ArrayList<>();
 
@@ -29,5 +31,20 @@ public class Library {
         for (Reader r : readers) {
             System.out.println(r);
         }
+    }   
+
+    @Override
+    public List<Book> searchByAuthor(String keyword) {
+        String normalizedKeyword = Searchable.normalizeKeyword(keyword);
+        return books.stream()
+                .filter(book -> Searchable.normalizeKeyword(book.getAuthor()).contains(normalizedKeyword))
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<Book> searchByTitle(String keyword) {
+        String normalizedKeyword = Searchable.normalizeKeyword(keyword);
+        return books.stream()
+                .filter(book -> Searchable.normalizeKeyword(book.getTitle()).contains(normalizedKeyword))
+                .collect(Collectors.toList());
     }
 }

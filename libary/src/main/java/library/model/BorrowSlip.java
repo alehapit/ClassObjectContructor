@@ -1,16 +1,23 @@
 package library.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-public class BorrowSlip {
+public class BorrowSlip implements Returnable {
+
     private String id;
     private Reader reader;
-    private Book book;
+    private Book_Generic book;
     private LocalDate borrowDate;
     private LocalDate dueDate;
     private LocalDate returnDate;
+    private boolean returned;
 
-    public BorrowSlip(String id, Reader reader, Book book, LocalDate borrowDate, LocalDate dueDate) {
+    public BorrowSlip() {
+        returned = false;
+    }
+    public BorrowSlip(String id, Reader reader, Book_Generic book, LocalDate borrowDate, LocalDate dueDate) {
         this.id = id;
         this.reader = reader;
         this.book = book;
@@ -25,13 +32,27 @@ public class BorrowSlip {
     // Getters & Setters
     public String getId() { return id; }
     public Reader getReader() { return reader; }
-    public Book getBook() { return book; }
+    public Book_Generic getBook() { return book; }
     public LocalDate getBorrowDate() { return borrowDate; }
     public LocalDate getDueDate() { return dueDate; }
     public LocalDate getReturnDate() { return returnDate; }
 
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
+    }
+
+    @Override
+    public void confirmReturn(String returnDateString) {
+        if (returnDateString == null || returnDateString.isBlank()) {
+            this.returnDate = LocalDate.now();
+            return;
+        }
+        this.returnDate = LocalDate.parse(returnDateString);
+    }
+
+    @Override
+    public boolean isReturned() {
+        return returnDate != null;
     }
 
     @Override

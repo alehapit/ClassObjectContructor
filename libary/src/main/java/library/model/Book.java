@@ -1,40 +1,60 @@
 package library.model;
 
-public class Book {
-    private String id;
+public class Book implements Borrowable {
+    private String bookId;
     private String title;
     private String author;
-    private int year;
-    private int quantity;
 
-    public Book(String id, String title, String author, int year, int quantity) {
-        this.id = id;
+    private String currentBorrowerId; // null neu chua ai muon
+    private String borrowDate;  
+
+    public Book(String bookId, String title, String author, String currentBorrowerId, String borrowDate) {
+        this.bookId = bookId;
         this.title = title;
         this.author = author;
-        this.year = year;
-        this.quantity = quantity;
+        this.currentBorrowerId = currentBorrowerId;
+        this.borrowDate = borrowDate;
     }
-
-    public boolean isAvailable() {
-        return quantity > 0;
+    public Book(String bookId, boolean isAvailable) {
+        this.bookId = bookId;      
+        this.currentBorrowerId = null;
+        this.borrowDate = null;
     }
-
-    public void decreaseQuantity() {
-        if (quantity > 0) quantity--;
+    public Book(String bookId, String title, String author) {
+        this.bookId = bookId;
+        this.title = title;
+        this.author = author;
+        this.currentBorrowerId = null;
+        this.borrowDate = null;
     }
-
-    public void increaseQuantity() {
-        quantity++;
-    }
-
-    // Getters
-    public String getId() { return id; }
-    public String getTitle() { return title; }
-    public String getAuthor() { return author; }
-    public int getQuantity() { return quantity; }
 
     @Override
-    public String toString() {
-        return "Book[" + id + " - " + title + " - " + author + ", SL: " + quantity + "]";
+    public void borrowBy(String readerId, String date) {
+        if (isAvailable()) {
+            this.currentBorrowerId = readerId;
+            this.borrowDate = date;
+            System.out.println("Book '" + title + "' borrowed by " + readerId + " on " + date);
+        } else {
+            System.out.println("Book '" + title + "' is currently not available for borrowing.");
+        }
     }
+   
+    // Getters
+    @Override
+    public void returnBook(String date) {
+        System.out.println("Book '" + title + "' returned on " + date);
+        this.currentBorrowerId = null;
+        this.borrowDate        = null;
+    }
+
+    @Override
+    public boolean isAvailable() { return currentBorrowerId == null; }
+
+    @Override
+    public String getBorrowerId() { return currentBorrowerId; }
+
+    public String getBookId() { return bookId; }
+    public String getTitle()  { return title;  }
+    public String getAuthor() { return author; }
+
 }

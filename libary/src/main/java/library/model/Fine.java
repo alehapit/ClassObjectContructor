@@ -3,15 +3,33 @@ package library.model;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class Fine {
+public class Fine implements Fineable {
     private static final double FINE_PER_DAY = 5000; // 5.000 VNĐ/ngày
+    
+    private double fine;
+    private boolean paid;
 
-    public static double calculateFine(BorrowSlip slip) {
-        if (slip.getReturnDate() == null) {
-            long daysLate = ChronoUnit.DAYS.between(slip.getDueDate(), LocalDate.now());
-            return daysLate > 0 ? daysLate * FINE_PER_DAY : 0;
+    public Fine(double fine) {
+        this.fine = fine;
+        this.paid = false;
+    }
+    @Override
+    public void payFine(double amount) {
+        if (amount >= fine) {
+            paid = true;
+            System.out.println("Đã thanh toán tiền phạt.");
+        } else {
+            System.out.println("Thanh toán chưa đủ.");
         }
-        long daysLate = ChronoUnit.DAYS.between(slip.getDueDate(), slip.getReturnDate());
-        return daysLate > 0 ? daysLate * FINE_PER_DAY : 0;
+    }
+
+    @Override
+    public boolean isPaid() {
+        return paid;
+    }
+
+    @Override
+    public double calculateFine() {
+        return fine;
     }
 }

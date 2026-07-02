@@ -1,0 +1,17 @@
+library\model\Librarian.class
+library\com\App.class
+library\model\Pair.class
+library\model\Book_Generic.class
+library\model\Student.class
+library\model\Lecturer.class
+library\model\Library.class
+library\model\Searchable.class
+library\model\LibraryUtils.class
+library\model\Borrowable.class
+library\model\GenericStack.class
+library\model\Fine.class
+library\model\Returnable.class
+library\model\ReaderType.class
+library\model\Book.class
+library\model\Reader.class
+library\model\BorrowSlip.class
